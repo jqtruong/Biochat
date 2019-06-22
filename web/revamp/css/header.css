@@ -1,0 +1,108 @@
+header {
+    height: 2em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2em;
+}
+
+header > .section {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    flex: 1;
+}
+
+header > .left.section {
+    flex: 3;
+}
+
+header .title {
+    background: transparent;
+    display: flex;
+    flex-direction: row;
+    font-size: 4em;             /* sets the relative em for itself and children */
+    font-family: 'Permanent Marker';
+    margin-right: 1em;
+}
+
+header .title > span {
+    position: relative;
+    top: -.5em;
+}
+
+header .title > span:first-child::before {
+    content: 'B';
+    color: brown;
+}
+
+header .title > span:nth-child(2)::before {
+    content: 'i';
+    color: darkorange;
+}
+
+header .title > span:nth-child(3)::before {
+    content: 'o';
+    color: gold;
+}
+
+header .title > span:nth-child(4)::before {
+    content: 'C';
+    color: yellowgreen;
+}
+
+header .title > span:nth-child(5)::before {
+    content: 'H';
+    color: forestgreen;
+}
+
+header .title > span:nth-child(6)::before {
+    content: 'A';
+    color: paleturquoise;
+}
+
+header .title > span:nth-child(7)::before {
+    content: 'T';
+    color: steelblue;
+}
+
+header .search-bar {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+}
+
+header .search-bar input {
+    background: white;
+    border: none;
+    border-radius: 1em;
+    padding: .5em 1em;
+    width: 100%;
+}
+
+header .right.section {
+    justify-content: flex-end;
+}
+
+header .right.section > *:last-child {
+    margin-right: 0;
+}
+
+#user-link {
+    align-items: center;
+    align-self: center;
+    background: white;
+    border-radius: 1.5em;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    width: 3em;
+    height: 3em;
+}
+
+#user-link i {
+    color: var(--dark-gray);
+    font-size: 1.5em;
+}

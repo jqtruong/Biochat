@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+      integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/index.css" />
+  </head>
+  <body>
+    <header>
+      <div class="left section">
+        <div class="title">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div class="search-bar">
+          <input
+            id="geo-search"
+            placeholder="GEO Record ID"
+          />
+        </div>
+      </div>
+      <div class="right section">
+        <div id="user-link">
+          <i class="fas fa-user-md"></i>
+        </div>
+      </div>
+    </header>
+    <main>
+      <div id="description">
+        <div>
+          <div>
+            Here, you can find the most similar records from the
+            <a href="https://www.ncbi.nlm.nih.gov/geo/" target="_blank">GEO Database</a>.
+            To do that, you have to put in a particular record's ID,
+            and optionally select the number of similar records to
+            show.
+          </div>
+          <div>
+            For instance, in record
+            <pre>https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS5879</pre>
+            the input number is <pre>GDS5879</pre>.
+          </div>
+          <div>
+            The GSE records are also supported: enter <pre>GSE425</pre> for
+            <pre>https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE425</pre>.
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer></footer>
+  </body>
+</html>

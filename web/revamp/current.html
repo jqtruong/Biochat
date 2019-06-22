@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Biochat</title>
+    <link href='../static/style.css' rel='stylesheet' type='text/css' />
+    <script type='text/javascript' src='../static/jquery-1.11.3.js'></script>
+    <script type='text/javascript' src='../static/spin.js'></script>
+    <script type='text/javascript' src='../static/main.js'></script>
+    <script type='text/javascript'>
+     $(document).ready(function() {
+       $('input[name=simmethods]:first').attr('checked', true);
+     });
+    </script>
+  </head>
+
+  <body>
+    <div class='page' id='page'>
+      <div style='margin-top: 40px;'>
+        <img style='margin-right: 20px; width: 100px; float: left;' src='../static/logo.png' />
+        <div style='color: gray;'>
+          Here, you can find the most similar records from the <a href='https://www.ncbi.nlm.nih.gov/geo/'>GEO DB</a>. To do that, you have to put in a particular record's ID (and optionally select the number of similar records to show).
+          <br />
+          For instance, in record https://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS5879 the input number is GDS5879.
+          <br />
+          The GSE records are also supported: enter GSE425 for https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE425.
+        </div>
+      </div>
+      <hr color='white' width='100%' />
+      <form action='/search' method='GET' id='search-form' onsubmit='return search()'>
+        <label for='gid'>Enter GEO record id:</label>
+        <input type='text' name='gid' id='gid' size='30' />
+        <label for='count'>count:</label>
+        <input type='text' name='count' id='count' size='3' value='10' />
+        <br />
+        <div class='box' id='sim-methods'>
+          Choose similarity methods:<br />
+          <input type='RADIO' name='simmethods' value='TFIDF-SIM' />
+          <label for='simmethods'>TFIDF similarity</label><br />
+          <input type='RADIO' name='simmethods' value='BM25-SIM' />
+          <label for='simmethods'>BM25 similarity - a variant of TFIDF</label><br />
+          <input type='RADIO' name='simmethods' value='COS-SIM' />
+          <label for='simmethods'>Cosine similarity of document vectors</label><br />
+          <input type='RADIO' name='simmethods' value='EUC-SIM' />
+          <label for='simmethods'>Euclidian distance-based similarity of document vectors</label><br />
+          <input type='RADIO' name='simmethods' value='EUCOS-SIM' />
+          <label for='simmethods'>Euclidian-cosine averaged similarity</label><br />
+          <input type='RADIO' name='simmethods' value='SMOOTHED-COS-SIM' />
+          <label for='simmethods'>Smoothed cosine similarity</label><br />
+        </div>
+        <div class='box' id='sim-filters'>
+          Choose additional filters:<br />
+          <input type='CHECKBOX' value='HISTONE' name='sim-filters' />
+          <label for='sim-filters'>Same histone</label><br />
+          <input type='CHECKBOX' value='ORGANISM' name='sim-filters' />
+          <label for='sim-filters'>Same organism</label><br />
+          <input type='CHECKBOX' value='LIBSTRATS' name='sim-filters' />
+          <label for='sim-filters'>Same sequencing type</label><br />
+        </div>
+        <div class='box' id='sim-organisms'>
+          Look only in these organisms: <a href='#' onclick='return toggle_simorganisms()' class='black'>▼</a><br />
+          <div id='simorganisms'>
+            <div class='organisms-box'>
+              <input type='CHECKBOX' value='Homo sapiens' name='sim-organisms' />
+              <label for='sim-organisms' class='spacelabel'>Homo sapiens</label>
+            </div>
+            <div class='organisms-box'>
+              <input type='CHECKBOX' value='Mus musculus' name='sim-organisms' />
+              <label for='sim-organisms' class='spacelabel'>Mus musculus</label>
+            </div>
+            <div class='organisms-box'>
+              <input type='CHECKBOX' value='Rattus norvegicus' name='sim-organisms' />
+              <label for='sim-organisms' class='spacelabel'>Rattus norvegicus</label>
+            </div>
+            <div class='organisms-box'>
+              <input type='CHECKBOX' value='Saccharomyces cerevisiae' name='sim-organisms' />
+              <label for='sim-organisms' class='spacelabel'>Saccharomyces cerevisiae</label>
+            </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Arabidopsis thaliana' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Arabidopsis thaliana</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Drosophila melanogaster' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Drosophila melanogaster</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Escherichia coli' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Escherichia coli</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Caenorhabditis elegans' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Caenorhabditis elegans</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Pseudomonas aeruginosa' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Pseudomonas aeruginosa</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Danio rerio' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Danio rerio</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Oryza sativa' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Oryza sativa</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Macaca mulatta' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Macaca mulatta</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Glycine max' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Glycine max</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Bos taurus' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Bos taurus</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Escherichia coli K-12' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Escherichia coli K-12</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Xenopus laevis' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Xenopus laevis</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Synechocystis sp. PCC 6803' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Synechocystis sp. PCC 6803</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Sus scrofa' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Sus scrofa</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Plasmodium falciparum' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Plasmodium falciparum</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Staphylococcus aureus' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Staphylococcus aureus</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Schizosaccharomyces pombe' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Schizosaccharomyces pombe</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Gallus gallus' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Gallus gallus</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Rhodobacter sphaeroides 2.4.1' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Rhodobacter sphaeroides 2.4.1</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Canis lupus familiaris' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Canis lupus familiaris</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Bradyrhizobium diazoefficiens USDA 110' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Bradyrhizobium diazoefficiens USDA 110</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Hordeum vulgare' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Hordeum vulgare</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Zea mays' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Zea mays</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Bacillus subtilis' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Bacillus subtilis</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Ips pini' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Ips pini</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Mycobacterium tuberculosis' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Mycobacterium tuberculosis</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Aspergillus nidulans' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Aspergillus nidulans</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Homarus americanus' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Homarus americanus</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Borreliella burgdorferi' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Borreliella burgdorferi</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Mycobacterium tuberculosis H37Rv' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Mycobacterium tuberculosis H37Rv</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Nitrosomonas europaea' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Nitrosomonas europaea</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Coxiella burnetii' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Coxiella burnetii</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Campylobacter jejuni' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Campylobacter jejuni</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Fundulus heteroclitus' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Fundulus heteroclitus</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Solanum lycopersicum' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Solanum lycopersicum</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Entamoeba histolytica' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Entamoeba histolytica</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Bacteroides thetaiotaomicron' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Bacteroides thetaiotaomicron</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Saccharum sp.' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Saccharum sp.</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Haemophilus influenzae Rd KW20' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Haemophilus influenzae Rd KW20</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Enterobacteria phage T4' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Enterobacteria phage T4</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Solanum tuberosum' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Solanum tuberosum</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Helicobacter pylori' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Helicobacter pylori</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Magnetospirillum magneticum AMB-1' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Magnetospirillum magneticum AMB-1</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Burkholderia pseudomallei K96243' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Burkholderia pseudomallei K96243</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Pyrococcus furiosus' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Pyrococcus furiosus</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Oryza sativa Japonica Group' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Oryza sativa Japonica Group</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Rhodococcus jostii RHA1' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Rhodococcus jostii RHA1</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Methylibium petroleiphilum PM1' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Methylibium petroleiphilum PM1</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Oncorhynchus mykiss' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Oncorhynchus mykiss</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Gossypium barbadense' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Gossypium barbadense</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Penicillium chrysogenum' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Penicillium chrysogenum</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='Pinus taeda' name='sim-organisms' />
+	      <label for='sim-organisms' class='spacelabel'>Pinus taeda</label>
+	    </div>
+          </div>
+        </div>
+        <div class='box' id='sim-libstrats'>
+          Look only in these library strategies: <a href='#' onclick='return toggle_simlibstrats()' class='black'>▼</a>
+          <br />
+          <div id='simlibstrats'>
+            <div class='organisms-box'>
+              <input type='CHECKBOX' value='MICROARRAY' name='sim-libstrats' />
+              <label for='sim-libstrats' class='spacelabel'>MICROARRAY</label>
+            </div>
+            <div class='organisms-box'>
+              <input type='CHECKBOX' value='BISULFITE-SEQ' name='sim-libstrats' />
+              <label for='sim-libstrats' class='spacelabel'>BISULFITE-SEQ</label>
+            </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='CHIP-SEQ' name='sim-libstrats' />
+	      <label for='sim-libstrats' class='spacelabel'>CHIP-SEQ</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='RNA-SEQ' name='sim-libstrats' />
+	      <label for='sim-libstrats' class='spacelabel'>RNA-SEQ</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='RIP-SEQ' name='sim-libstrats' />
+	      <label for='sim-libstrats' class='spacelabel'>RIP-SEQ</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='OTHER' name='sim-libstrats' />
+	      <label for='sim-libstrats' class='spacelabel'>OTHER</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='DNASE-HYPERSENSITIVITY' name='sim-libstrats' />
+	      <label for='sim-libstrats' class='spacelabel'>DNASE-HYPERSENSITIVITY</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='ATAC-SEQ' name='sim-libstrats' />
+	      <label for='sim-libstrats' class='spacelabel'>ATAC-SEQ</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='MIRNA-SEQ' name='sim-libstrats' />
+	      <label for='sim-libstrats' class='spacelabel'>MIRNA-SEQ</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' name='sim-libstrats' />
+	      <label for='sim-libstrats' class='spacelabel'>
+	      </label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='MNASE-SEQ' name='sim-libstrats' />
+	      <label for='sim-libstrats' class='spacelabel'>MNASE-SEQ</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='TN-SEQ' name='sim-libstrats' />
+	      <label for='sim-libstrats' class='spacelabel'>TN-SEQ</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='FAIRE-SEQ' name='sim-libstrats' />
+	      <label for='sim-libstrats' class='spacelabel'>FAIRE-SEQ</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='MEDIP-SEQ' name='sim-libstrats' />
+	      <label for='sim-libstrats' class='spacelabel'>MEDIP-SEQ</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='NCRNA-SEQ' name='sim-libstrats' />
+	      <label for='sim-libstrats' class='spacelabel'>NCRNA-SEQ</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='MRE-SEQ' name='sim-libstrats' />
+	      <label for='sim-libstrats' class='spacelabel'>MRE-SEQ</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='MBD-SEQ' name='sim-libstrats' />
+	      <label for='sim-libstrats' class='spacelabel'>MBD-SEQ</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='HI-C' name='sim-libstrats' />
+	      <label for='sim-libstrats' class='spacelabel'>HI-C</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='SSRNA-SEQ' name='sim-libstrats' />
+	      <label for='sim-libstrats' class='spacelabel'>SSRNA-SEQ</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='FL-CDNA' name='sim-libstrats' />
+	      <label for='sim-libstrats' class='spacelabel'>FL-CDNA</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='WGS' name='sim-libstrats' />
+	      <label for='sim-libstrats' class='spacelabel'>WGS</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='SELEX' name='sim-libstrats' />
+	      <label for='sim-libstrats' class='spacelabel'>SELEX</label>
+	    </div>
+            <div class='organisms-box'>
+	      <input type='CHECKBOX' value='CHIA-PET' name='sim-libstrats' />
+	      <label for='sim-libstrats' class='spacelabel'>CHIA-PET</label>
+	    </div>
+          </div>
+        </div>
+        <div>
+          <input type='submit' value='Search' />
+        </div>
+      </form>
+      <br />
+      <div id='search-results'>
+      </div>
+    </div>
+  </body>
+
+</html>
