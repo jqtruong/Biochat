@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto|Permanent+Marker&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto|Permanent+Marker|Roboto+Mono&display=swap');
 @import url('header.css');
 @import url('main.css');
 @import url('events.css');
@@ -12,14 +12,14 @@ body {
     color: var(--dark-gray);
     padding: 0;
     margin: 0;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto Mono';
     font-size: 20px;
     display: flex;
     flex-direction: column;
 }
 
 input {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto Mono';
     font-size: 1em;
 }
 

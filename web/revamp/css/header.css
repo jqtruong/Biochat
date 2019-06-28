@@ -5,6 +5,7 @@ header {
     align-items: center;
     justify-content: space-between;
     padding: 2em;
+    z-index: 2;
 }
 
 header > .section {
@@ -70,16 +71,21 @@ header .title > span:nth-child(7)::before {
 header .search-bar {
     align-items: center;
     display: flex;
-    flex: 1;
     justify-content: center;
 }
 
 header .search-bar input {
-    background: white;
+    background: yellowgreen;
     border: none;
     border-radius: 1em;
-    padding: .5em 1em;
+    color: white;
+    height: 2em;
+    padding: 0 1em;
     width: 100%;
+}
+
+header .search-bar input::placeholder {
+    color: greenyellow;
 }
 
 header .right.section {
@@ -90,19 +96,48 @@ header .right.section > *:last-child {
     margin-right: 0;
 }
 
-#user-link {
+.right.section > div {
     align-items: center;
     align-self: center;
     background: white;
-    border-radius: 1.5em;
+    border-radius: 1em;
     cursor: pointer;
     display: flex;
+    height: 2em;
     justify-content: center;
-    width: 3em;
-    height: 3em;
+    margin-right: 1em;
+    width: 2em;
 }
 
-#user-link i {
+.right.section > div > div {
+    align-items: center;
+    background: transparent;
+    border: 0px solid;
+    border-radius: 1em;
+    display: flex;
+    height: 2em;
+    justify-content: center;
+    position: absolute;
+    width: 2em;
+}
+
+.right.section > div i {
     color: var(--dark-gray);
-    font-size: 1.5em;
+    font-size: 1em;
+}
+
+#search-options {
+    background: paleturquoise;
+}
+
+#search-options > div {
+    border-color: paleturquoise;
+}
+
+#user-link {
+    background: steelblue;
+}
+
+#user-link > div {
+    border-color: steelblue;
 }
