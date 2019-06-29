@@ -5,6 +5,7 @@
 
 :root {
     --dark-gray: #2e2e2e;
+    --shadow-color: rgba(0, 0, 0, .5);
 }
 
 body {
@@ -30,5 +31,4 @@ input {
 a, a:visited, a:hover, a:focus {
     background: ghostwhite;
     color: steelblue;
-    padding: 0 .25em;
 }

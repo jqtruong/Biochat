@@ -8,6 +8,10 @@ header {
     z-index: 2;
 }
 
+/************/
+/* Sections */
+/************/
+
 header > .section {
     display: flex;
     flex-direction: row;
@@ -18,6 +22,18 @@ header > .section {
 header > .left.section {
     flex: 3;
 }
+
+header .right.section {
+    justify-content: flex-end;
+}
+
+header .right.section > *:last-child {
+    margin-right: 0;
+}
+
+/*********/
+/* Title */
+/*********/
 
 header .title {
     background: transparent;
@@ -68,10 +84,15 @@ header .title > span:nth-child(7)::before {
     color: steelblue;
 }
 
+/**************/
+/* Search Bar */
+/**************/
+
 header .search-bar {
     align-items: center;
     display: flex;
     justify-content: center;
+    margin-right: 1em;
 }
 
 header .search-bar input {
@@ -88,15 +109,31 @@ header .search-bar input::placeholder {
     color: greenyellow;
 }
 
-header .right.section {
-    justify-content: flex-end;
+#search-options {
+    background: paleturquoise;
 }
 
-header .right.section > *:last-child {
-    margin-right: 0;
+#search-options > div {
+    border-color: paleturquoise;
 }
 
-.right.section > div {
+/*************/
+/* User Link */
+/*************/
+
+#user-link {
+    background: steelblue;
+}
+
+#user-link > div {
+    border-color: steelblue;
+}
+
+/***********/
+/* Buttons */
+/***********/
+
+header .button {
     align-items: center;
     align-self: center;
     background: white;
@@ -105,11 +142,10 @@ header .right.section > *:last-child {
     display: flex;
     height: 2em;
     justify-content: center;
-    margin-right: 1em;
     width: 2em;
 }
 
-.right.section > div > div {
+header .button > div {
     align-items: center;
     background: transparent;
     border: 0px solid;
@@ -121,23 +157,21 @@ header .right.section > *:last-child {
     width: 2em;
 }
 
-.right.section > div i {
+header .button > div i {
     color: var(--dark-gray);
     font-size: 1em;
 }
 
-#search-options {
-    background: paleturquoise;
-}
+/*****************/
+/* Media Queries */
+/*****************/
 
-#search-options > div {
-    border-color: paleturquoise;
-}
+@media (max-width: 1122x) {
+    header > .left.section {
+        flex: .8;
+    }
 
-#user-link {
-    background: steelblue;
-}
-
-#user-link > div {
-    border-color: steelblue;
+    header > .right.section {
+        flex: .2;
+    }
 }

@@ -1,10 +1,18 @@
+/**************/
+/* Highlights */
+/**************/
+
 #geo-search:hover,
 #geo-search:focus,
-.right.section > div:hover,
-.right.section > div:focus
+header .button:hover,
+header .button:focus
 {
     box-shadow: 0px 0px .5em rgba(255, 255, 255, .8);
 }
+
+/************************/
+/* Search Bar Animation */
+/************************/
 
 #geo-search:active {
     animation-delay: 0s, 1s;
@@ -36,8 +44,11 @@
     }
 }
 
+/**********************/
+/* Buttons Animations */
+/**********************/
 
-.right.section > div > div:active
+header .button > div:active
 {
     animation-delay: 0s, 1s;
     animation-duration: 1s, 1s;
