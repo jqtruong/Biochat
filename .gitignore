@@ -3,4 +3,5 @@
 \#*
 .\#*
 .*
+!.org
 !.gitignore

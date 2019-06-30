@@ -1,0 +1,4 @@
+* TODOs
+** TODO filters
+** TODO analyze records for styling
+** TODO user menu (optional)
