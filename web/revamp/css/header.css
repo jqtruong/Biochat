@@ -20,10 +20,11 @@ header > .section {
 }
 
 header > .left.section {
-    flex: 3;
+    flex: .5;
 }
 
 header .right.section {
+    flex: .5;
     justify-content: flex-end;
 }
 
@@ -39,14 +40,14 @@ header .title {
     background: transparent;
     display: flex;
     flex-direction: row;
-    font-size: 4em;             /* sets the relative em for itself and children */
+    font-size: 3em;             /* sets the relative em for itself and children */
     font-family: 'Permanent Marker';
     margin-right: 1em;
 }
 
 header .title > span {
     position: relative;
-    top: -.5em;
+    top: -.40em;
 }
 
 header .title > span:first-child::before {
@@ -91,8 +92,10 @@ header .title > span:nth-child(7)::before {
 header .search-bar {
     align-items: center;
     display: flex;
+    flex: 1;
     justify-content: center;
     margin-right: 1em;
+    max-width: 250px;
 }
 
 header .search-bar input {
@@ -111,6 +114,7 @@ header .search-bar input::placeholder {
 
 #search-options {
     background: paleturquoise;
+    width: 2em;
 }
 
 #search-options > div {
@@ -166,12 +170,23 @@ header .button > div i {
 /* Media Queries */
 /*****************/
 
-@media (max-width: 1122x) {
+@media (max-width: 1200px) {
+    /* Sections */
     header > .left.section {
         flex: .8;
     }
 
     header > .right.section {
         flex: .2;
+    }
+
+    /* Title */
+    header .title {
+        font-size: 2em;
+    }
+
+    header .title > span {
+        position: relative;
+        top: -.25em;
     }
 }
