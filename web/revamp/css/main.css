@@ -17,6 +17,10 @@ main > section {
     padding: 1em 2em;
 }
 
+main > section > div {
+    max-width: 1024px;
+}
+
 main > section > div,
 main > section > div > div {
     margin: 1em;
@@ -54,9 +58,9 @@ main > section > div > div {
 
 .search-results > div {
     background: #383838;
-    border: 1px solid #424242;
+    border: 1px solid white;
+    border-radius: .1em 0 .1em .1em;
     color: white;
-    max-width: 1024px;
 }
 
 .search-results > div[data-record] {
@@ -64,40 +68,68 @@ main > section > div > div {
 }
 
 .search-results > div[data-record] > .label {
-    background: #383838;
-    border: 1px solid white;
-    color: white;
-    font-size: .75em;
+    background: white;
+    color: #2e2e2e;
+    font-size: .5em;
     padding: .25em .5em;
     position: absolute;
     right: calc(-1em - 1px);
-    top: calc(-3em);
+    top: calc(-3em + 1px);
+}
+
+.search-results > div[data-record=match]:nth-child(7n + 1) > .label {
+    background: brown;
 }
 
 .search-results > div[data-record=match]:nth-child(7n + 1) {
-    box-shadow: 0px 0px .25em rgba(165, 42, 42, .5);
+    border: 1px solid brown;
+}
+
+.search-results > div[data-record=match]:nth-child(7n + 2) > .label {
+    background: darkorange;
+
 }
 
 .search-results > div[data-record=match]:nth-child(7n + 2) {
-    box-shadow: 0px 0px .25em rgba(255, 140, 0, .5);
+    border: 1px solid darkorange;
+}
+
+.search-results > div[data-record=match]:nth-child(7n + 3) > .label {
+    background: gold;
 }
 
 .search-results > div[data-record=match]:nth-child(7n + 3) {
-    box-shadow: 0px 0px .25em rgba(255, 215, 0, .5);
+    border: 1px solid gold;
+}
+
+.search-results > div[data-record=match]:nth-child(7n + 4) > .label {
+    background: yellowgreen;
 }
 
 .search-results > div[data-record=match]:nth-child(7n + 4) {
-    box-shadow: 0px 0px .25em rgba(154, 205, 50, .5);
+    border: 1px solid yellowgreen;
+}
+
+.search-results > div[data-record=match]:nth-child(7n + 5) > .label {
+    background: forestgreen;
 }
 
 .search-results > div[data-record=match]:nth-child(7n + 5) {
-    box-shadow: 0px 0px .25em rgba(34, 130, 34, .5);
+    border: 1px solid forestgreen;
+}
+
+.search-results > div[data-record=match]:nth-child(7n + 6) > .label {
+    background: paleturquoise;
 }
 
 .search-results > div[data-record=match]:nth-child(7n + 6) {
-    box-shadow: 0px 0px .25em rgba(175, 238, 238, .5);
+    border: 1px solid paleturquoise;
+}
+
+.search-results > div[data-record=match]:nth-child(7n + 7) > .label {
+    background: steelblue;
 }
 
 .search-results > div[data-record=match]:nth-child(7n + 7) {
-    box-shadow: 0px 0px .25em rgba(70, 130, 180, .5);
+    border: 1px solid steelblue;
 }
