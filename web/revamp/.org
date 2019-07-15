@@ -2,7 +2,8 @@
 ** TODO filters
 ** TODO analyze records for styling
 ** TODO user menu (optional)
-
+** TODO rounded corners for tags
+   eg. Requested, Match #, etc.
 * A REC
   #+BEGIN_SRC web
     <div class="geo-rec">

@@ -69,6 +69,7 @@ main > section > div > div {
 
 .search-results > div[data-record] > .label {
     background: white;
+    border-radius: .5em .5em 0 0;
     color: #2e2e2e;
     font-size: .5em;
     padding: .25em .5em;
@@ -79,6 +80,7 @@ main > section > div > div {
 
 .search-results > div[data-record=match]:nth-child(7n + 1) > .label {
     background: brown;
+    color: white;
 }
 
 .search-results > div[data-record=match]:nth-child(7n + 1) {
@@ -87,7 +89,7 @@ main > section > div > div {
 
 .search-results > div[data-record=match]:nth-child(7n + 2) > .label {
     background: darkorange;
-
+    color: white;
 }
 
 .search-results > div[data-record=match]:nth-child(7n + 2) {
@@ -112,6 +114,7 @@ main > section > div > div {
 
 .search-results > div[data-record=match]:nth-child(7n + 5) > .label {
     background: forestgreen;
+    color: white;
 }
 
 .search-results > div[data-record=match]:nth-child(7n + 5) {
@@ -128,6 +131,7 @@ main > section > div > div {
 
 .search-results > div[data-record=match]:nth-child(7n + 7) > .label {
     background: steelblue;
+    color: white;
 }
 
 .search-results > div[data-record=match]:nth-child(7n + 7) {
